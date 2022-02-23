@@ -1,0 +1,38 @@
+const int Echo=5;
+const int Trigger=6;
+int distance;
+
+void setup()
+{
+	Serial.begin(9600);
+	pinMode(Trigger,OUTPUT);
+	pinMode(Echo,INPUT);
+	digitalWrite(Trigger,Low);
+}
+
+int detectar_sensor()
+{
+	long t;
+	long d;
+
+	digitalWrite(Trigger,LOW);
+	delayMicroseconds(5);
+	digitalWrite(Trigger,HIGH);
+	delayMicroseconds(15);
+	digitalWrite(Trigger,LOW);
+
+	t=pulseIn(Echo,HIGH);
+	d=t*0.01657;
+
+	return d;
+}
+
+void loop()
+{
+	distance=detectar_sensor();
+	Serial.print("Distancia:");
+	Serial.print(distance);
+	Serial.print("cm");
+
+	delay(100);
+}
